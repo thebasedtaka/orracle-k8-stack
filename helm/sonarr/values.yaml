@@ -15,7 +15,7 @@ service:
   type: ClusterIP
   port: 80
 
-replicaCount: 93
+replicaCount: 1
 
 autoscaling:
   enabled: false

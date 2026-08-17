@@ -25,17 +25,30 @@ jobs:
       - name: Update Helm repos
         run: helm repo update
 
+      - name: Prepare chart directory
+        run: mkdir -p /tmp/charts
+
       - name: Lint qBittorrent
-        run: helm lint alekc-charts/qbittorrent --version 2.7.5 -f helm/qbittorrent/values.yaml
+        run: |
+          helm pull alekc-charts/qbittorrent --version 2.7.5 --untar --untardir /tmp/charts
+          helm lint /tmp/charts/qbittorrent -f helm/qbittorrent/values.yaml
 
       - name: Lint Sonarr
-        run: helm lint alekc-charts/sonarr -f helm/sonarr/values.yaml
+        run: |
+          helm pull alekc-charts/sonarr --version SONARR_VERSION --untar --untardir /tmp/charts
+          helm lint /tmp/charts/sonarr -f helm/sonarr/values.yaml
 
       - name: Lint Radarr
-        run: helm lint alekc-charts/radarr -f helm/radarr/values.yaml
+        run: |
+          helm pull alekc-charts/radarr --version RADARR_VERSION --untar --untardir /tmp/charts
+          helm lint /tmp/charts/radarr -f helm/radarr/values.yaml
 
       - name: Lint Prowlarr
-        run: helm lint alekc-charts/prowlarr -f helm/prowlarr/values.yaml
+        run: |
+          helm pull alekc-charts/prowlarr --version PROWLARR_VERSION --untar --untardir /tmp/charts
+          helm lint /tmp/charts/prowlarr -f helm/prowlarr/values.yaml
 
       - name: Lint Jellyfin
-        run: helm lint alekc-charts/jellyfin --version 0.8.11 -f helm/jellyfin/values.yaml
+        run: |
+          helm pull alekc-charts/jellyfin --version 0.8.11 --untar --untardir /tmp/charts
+          helm lint /tmp/charts/jellyfin -f helm/jellyfin/values.yaml
