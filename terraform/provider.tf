@@ -38,6 +38,6 @@ module "k8s_setup" {
   providers = {
     oci.home = oci.home
   }
-  kubernetes_version = "v1.36.1"
+  kubernetes_version   = "v1.36.1"
   node_pool_os_version = "8.10"
 }
