@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prowlarr
+  namespace: argocd
+spec:
+  project: default
+
+  sources:
+    - repoURL: https://charts.alekc.dev/
+      chart: prowlarr
+      targetRevision: 2.4.0
+      helm:
+        valueFiles:
+          - $values/helm/prowlarr/values.yaml
+
+    - repoURL: https://github.com/thebasedtaka/orracle-k8-stack.git
+      targetRevision: main
+      ref: values
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: media
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

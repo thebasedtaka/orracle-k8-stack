@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: jellyfin
+  namespace: argocd
+spec:
+  project: default
+
+  sources:
+    - repoURL: https://charts.alekc.dev/
+      chart: jellyfin
+      targetRevision: 0.8.11
+      helm:
+        valueFiles:
+          - $values/helm/jellyfin/values.yaml
+
+    - repoURL: https://github.com/thebasedtaka/orracle-k8-stack.git
+      targetRevision: main
+      ref: values
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: media
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
