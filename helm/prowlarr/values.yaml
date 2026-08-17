@@ -1,0 +1,21 @@
+replicaCount: 1
+
+image:
+  repository: linuxserver/prowlarr
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+service:
+  type: ClusterIP
+  port: 80
+
+env:
+  PUID: "1000"
+  PGID: "1000"
+  TZ: "America/Toronto"
+  UMASK: "002"
+
+persistence:
+  enabled: true
+  accessMode: ReadWriteOnce
+  size: 800Mi

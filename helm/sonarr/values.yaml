@@ -1,0 +1,40 @@
+image:
+  repository: linuxserver/sonarr
+  pullPolicy: IfNotPresent
+  tag: "4.0.19"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+deployment:
+  strategy:
+    type: Recreate
+
+service:
+  type: ClusterIP
+  port: 80
+
+replicaCount: 1
+
+autoscaling:
+  enabled: false
+
+env:
+  PUID: "1000"
+  PGID: "1000"
+  TZ: "America/Toronto"
+  UMASK: "002"
+
+persistence:
+  enabled: true
+  accessMode: ReadWriteOnce
+  size: 800Mi
+  additionalVolumes:
+    - name: media
+      persistentVolumeClaim:
+        claimName: media-storage
+  
+  additionalMounts:
+    - name: media
+      mountPath: /data/tv

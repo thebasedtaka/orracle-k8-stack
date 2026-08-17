@@ -1,0 +1,35 @@
+replicaCount: 1
+
+deployment:
+  strategy:
+    type: Recreate
+
+webService:
+  type: ClusterIP
+  port: 80
+
+btService:
+  type: ClusterIP
+  port: 6881
+
+env:
+  PUID: "1000"
+  PGID: "1000"
+  TZ: "America/Toronto"
+
+persistence:
+  enabled: true
+  accessMode: ReadWriteOnce
+  size: 800Mi
+
+  additionalVolumes:
+    - name: media
+      persistentVolumeClaim:
+        claimName: media-storage
+  
+  additionalMounts:
+    - name: media
+      mountPath: /data/downloads
+
+vpn:
+  enabled: false

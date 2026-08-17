@@ -1,0 +1,33 @@
+replicaCount: 1
+
+image:
+  repository: linuxserver/radarr
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "latest"
+
+service:
+  type: ClusterIP
+  port: 80
+
+
+autoscaling:
+  enabled: false
+
+env:
+  PUID: "1000"
+  PGID: "1000"
+  TZ: "America/Toronto"
+  UMASK: "002"
+
+persistence:
+  enabled: true
+  accessMode: ReadWriteOnce
+  size: 800Mi
+  additionalVolumes:
+    - name: media
+      persistentVolumeClaim:
+        claimName: media-storage
+  additionalMounts:
+    - name: media
+      mountPath: /data/movies
