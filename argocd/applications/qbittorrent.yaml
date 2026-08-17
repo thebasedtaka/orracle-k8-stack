@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/vialpha1
+kind: Application
+metadata:
+  name: qbittorrent
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/thebasedtaka/orracle-k8-stack.git
+    targetRevision: main
+    path: helm/qbittorrent
+    helm:
+      valueFiles:
+        - values.yaml
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: media
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+
+          
