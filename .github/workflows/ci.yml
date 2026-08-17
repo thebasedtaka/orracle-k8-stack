@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Helm
+        uses: azure/setup-helm@v4
+
+      - name: Add Alekc Helm repo
+        run: helm repo add alekc-charts https://charts.alekc.dev/
+
+      - name: Update Helm repos
+        run: helm repo update
+
+      - name: Lint qBittorrent
+        run: helm lint alekc-charts/qbittorrent --version 2.7.5 -f helm/qbittorrent/values.yaml
+
+      - name: Lint Sonarr
+        run: helm lint alekc-charts/sonarr -f helm/sonarr/values.yaml
+
+      - name: Lint Radarr
+        run: helm lint alekc-charts/radarr -f helm/radarr/values.yaml
+
+      - name: Lint Prowlarr
+        run: helm lint alekc-charts/prowlarr -f helm/prowlarr/values.yaml
+
+      - name: Lint Jellyfin
+        run: helm lint alekc-charts/jellyfin --version 0.8.11 -f helm/jellyfin/values.yaml
