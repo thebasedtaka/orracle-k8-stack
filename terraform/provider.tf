@@ -32,12 +32,19 @@ module "k8s_setup" {
   region         = var.region
   node_pool_size = 1
 
+  control_plane_type = "public"
+
+  control_plane_allowed_cidrs = [
+    var.public_ip
+  ]
+
   ssh_public_key_path  = "~/.ssh/id_rsa.pub"
   ssh_private_key_path = "~/.ssh/id_rsa"
 
   providers = {
     oci.home = oci.home
   }
+
   kubernetes_version   = "v1.36.1"
   node_pool_os_version = "8.10"
 }

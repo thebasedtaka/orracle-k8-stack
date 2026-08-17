@@ -22,3 +22,8 @@ variable "region" {
   description = "OCI region where resources will be created for Tenancy"
   type        = string
 }
+
+variable "public_ip" {
+  description = "home ip"
+  type        = string
+}
