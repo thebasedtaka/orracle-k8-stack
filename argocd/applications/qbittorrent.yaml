@@ -6,21 +6,25 @@ metadata:
 spec:
   project: default
 
-  source:
-    repoURL: https://github.com/thebasedtaka/orracle-k8-stack.git
-    targetRevision: main
-    path: helm/qbittorrent
-    helm:
-      valueFiles:
-        - values.yaml
+  sources:
+    - repoURL: https://charts.alekc.dev/
+      chart: qbittorrent
+      targetRevision: 2.7.2
+      helm:
+        valueFiles:
+          - $values/helm/qbittorrent/values.yaml
+
+    - repoURL: https://github.com/thebasedtaka/orracle-k8-stack.git
+      targetRevision: main
+      ref: values
 
   destination:
     server: https://kubernetes.default.svc
     namespace: media
+
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
-
