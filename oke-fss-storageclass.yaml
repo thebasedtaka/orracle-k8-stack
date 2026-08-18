@@ -1,0 +1,13 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: oci-fss
+provisioner: fss.csi.oraclecloud.com
+parameters:
+  availabilityDomain: "poZe:CA-TORONTO-1-AD-1"
+  mountTargetSubnetOcid: "ocid1.subnet.oc1.ca-toronto-1.aaaaaaaaxc5nnfc7y2ak3p7hgw4dxqiqnhllacwgzjsuwms3dlqjs5fu4x4a"
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
+allowVolumeExpansion: true
+mountOptions:
+  - nfsvers=3

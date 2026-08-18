@@ -1,8 +1,33 @@
 .terraform/
+.terraform.tfstate.lock.info
 *.tfstate
 *.tfstate.*
 crash.log
 crash.*.log
 *.tfvars
 *.tfvars.json
-.terraform.tfstate.lock.info
+!terraform/terraform.tfvars.example
+
+# Secrets and local credentials
+*.pem
+*.key
+*.crt
+*.csr
+*.p12
+*.pfx
+*.jks
+*.pub
+*.kubeconfig
+.kube/
+.env
+.env.*
+!.env.example
+
+# Editor / OS / temp files
+*.log
+*.bak
+*.orig
+*.swp
+*.tmp
+.DS_Store
+Thumbs.db
